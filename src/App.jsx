@@ -1,26 +1,48 @@
-import ButtonGradient from "./assets/svg/ButtonGradient";
-import Benefits from "./components/Benefits";
-import Collaboration from "./components/Collaboration";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Pricing from "./components/Pricing";
-import Roadmap from "./components/Roadmap";
-import Services from "./components/Services";
+import { Routes, Route } from "react-router-dom";
+
+import Home from "./Pages/Home";
+import PricingPage from "./Pages/PricingPage";
+import Login from "./Pages/Login";
+import Signup from "./Pages/Signup";
+
+
+import AppLayout from "./components/AppLayout";
+
+import DashBoard from "./Pages/app/DashBoard";
+import Chat from "./Pages/app/Chat";
+
+import ProtectedRoute from "./components/ProtectedRoute";
+import ForgotPassword from "./Pages/ForgotPassword";
+import ResetPassword from "./Pages/ResetPassword";
+
+
+
+
 const App = () => {
   return (
     <>
-      <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden">
-        <Header />
-        <Hero />
-        <Benefits />
-        <Collaboration />
-        <Services />
-        <Pricing />
-        <Roadmap />
-        <Footer />
-      </div>
-      <ButtonGradient />
+
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/pricing" element={<PricingPage />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
+        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+        <Route path="/reset-password" element={<ResetPassword />}></Route>
+
+        {/* Application*/}
+
+        <Route path="/app" element={
+          <ProtectedRoute>
+            <AppLayout />
+          </ProtectedRoute>
+        }>
+          <Route index element={<DashBoard />}></Route>
+          <Route path="chat" element={<Chat />}></Route>
+        </Route>
+
+      </Routes>
+
     </>
   );
 };

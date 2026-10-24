@@ -22,3 +22,30 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+brainwave-backend/.env
+brainwave-backend/.env.*
+
+# Backend dependencies and build output
+brainwave-backend/node_modules/
+brainwave-backend/dist/
+
+# Private notes and credentials
+openai.txt
+
+node_modules/
+dist/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+brainwave-backend/.env
+brainwave-backend/.env.*
+
+# Private credentials and notes
+openai.txt

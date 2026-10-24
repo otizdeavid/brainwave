@@ -13,14 +13,14 @@ const Hero = () => {
   const parallaxRef = useRef(null);
   return (
     <Section
-      className=" pt-[12rem] -mt-[5.25]"
+      className="pt-[7rem] sm:pt-[9rem] md:pt-[12rem]"
       crosses
       crossesOffset="lg:translate-y-[5.25rem]"
       customPaddings
       id="hero"
     >
       <div className="container relative" ref={parallaxRef}>
-        <div className="relative z-1 max-w-[62rem] mx-auto text-center mb-[4rem] md:mb-20 lg:mb:[6rem]">
+        <div className="relative z-1 w-full max-w-[62rem] mx-auto text-center mb-10 sm:mb-12 md:mb-20 lg:mb-24">
           <h1 className="h1 mb-6">
             Explore the Possibilities of&nbsp;AI&nbsp;Chatting with
             <span className="inline-block relative px-3">
@@ -38,9 +38,11 @@ const Hero = () => {
             Unleash the power of AI within Brianwave. Upgrade your productivity
             with Brianwave, the open AI chat app.
           </p>
-          <Button white>Get started</Button>
+          <Button href="/signup" white>
+            Get started
+          </Button>
         </div>
-        <div className="relative max-w-[23rem] mx-auto md:max-w-5xl xl:mb-24">
+        <div className="relative max-w-[23rem] mx-auto md:max-w-5xl xl:mb-24 overflow-hidden">
           <div className="relative z-1 p-0.5 rounded-2xl bg-conic-gradient">
             <div className="relative bg-n-8 rounded-[1rem]">
               <div className="h-[1.4rem] bg-n-10 rounded-t-[0.9rem]" />
@@ -48,7 +50,7 @@ const Hero = () => {
                 <img
                   src={robot}
                   alt="AI"
-                  className="w-full scale-[1.7] translate-y-[8%] md:scale-[1] md:-translate-y-[10%] lg:-translate-y-[23%]"
+                  className="w-full scale-[1.25] translate-y-[4%] sm:scale-[1.4] sm:translate-y-[6%] md:scale-[1] md:-translate-y-[10%] lg:-translate-y-[23%]"
                   width={1024}
                   height={490}
                 />
@@ -73,7 +75,7 @@ const Hero = () => {
             </div>
             <Gradient />
           </div>
-          <div className="absolute -top-[54%] left-1/2 w-[234%] -translate-x-1/2 md:-top-[46%] md:w-[138%] lg:-top-[104%]">
+          <div className="absolute -top-[54%] left-1/2 w-[200%] max-w-none -translate-x-1/2 md:-top-[46%] md:w-[138%] lg:-top-[104%]">
             <img
               src={heroBackground}
               className="w-full"

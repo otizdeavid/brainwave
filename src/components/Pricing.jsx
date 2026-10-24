@@ -8,7 +8,7 @@ const Pricing = () => {
   return (
     <Section crosses className="overflow-hidden" id="pricing">
       <div className="container relative z-2">
-        <div className="hidden relative justify-center md-[6.5rem] lg:flex">
+        <div className="hidden relative justify-center md:mb-[6.5rem] lg:flex">
           <img
             src={smallSphere}
             className="relative z-1"

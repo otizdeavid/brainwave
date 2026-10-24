@@ -1,3 +1,4 @@
+
 import ButtonSvg from "../assets/svg/ButtonSvg";
 
 const Button = ({ className, href, onClick, children, px, white }) => {
@@ -15,8 +16,12 @@ const Button = ({ className, href, onClick, children, px, white }) => {
   );
 
   const renderLink = () => (
-    <a href={href}>
-      <span className={spanClasses}> {children} </span>
+    <a
+      href={href}
+      className={classes}
+      onClick={onClick}
+    >
+      <span className={spanClasses}>{children}</span>
       {ButtonSvg(white)}
     </a>
   );
