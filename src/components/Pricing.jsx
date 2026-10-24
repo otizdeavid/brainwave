@@ -31,7 +31,7 @@ const Pricing = () => {
           title="Pay once, use forever"
         />
         <div className="relative">
-          <Pricinglist />
+          <PricingList />
           <LeftLine />
           <RightLine />
         </div>
