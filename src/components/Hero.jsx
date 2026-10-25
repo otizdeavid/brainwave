@@ -13,7 +13,7 @@ const Hero = () => {
   const parallaxRef = useRef(null);
   return (
     <Section
-      className="pt-[7rem] sm:pt-[9rem] md:pt-[12rem]"
+      className="pt-[7rem] sm:pt-[9rem] md:pt-[12rem] overflow-hidden"
       crosses
       crossesOffset="lg:translate-y-[5.25rem]"
       customPaddings

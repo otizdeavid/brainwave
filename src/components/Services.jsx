@@ -12,7 +12,7 @@ import {
 
 const Services = () => {
   return (
-    <Section id="how-to-use overflow-hidden">
+    <Section id="how-to-use" className="overflow-flow">
       <div className="container">
         <Heading
           title="Generative AI made for creator."
