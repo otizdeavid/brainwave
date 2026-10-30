@@ -39,9 +39,12 @@ export async function apiGetPosts() {
   return response.json();
 }
 
-export async function sendChatMessage(message) {
+export async function sendChatMessage(message, messages = []) {
   return apiRequest("/api/chat", {
     method: "POST",
-    body: JSON.stringify({ message }),
+    body: JSON.stringify({
+      message,
+      messages,
+    }),
   });
 }

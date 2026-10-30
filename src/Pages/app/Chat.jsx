@@ -5,6 +5,8 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { sendChatMessage } from "../../services/api";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 function Chat() {
   const {
@@ -27,6 +29,35 @@ function Chat() {
   );
 
   const messages = activeConversation?.messages ?? [];
+
+  function buildHistory(conversationId, messageId, content) {
+    const conversation = conversations.find(
+      (item) => item.id === conversationId
+    );
+
+    const conversationMessages = conversation?.messages ?? [];
+    const messageIndex = conversationMessages.findIndex(
+      (message) => message.id === messageId
+    );
+
+    const previousMessages =
+      messageIndex >= 0
+        ? conversationMessages.slice(0, messageIndex)
+        : conversationMessages;
+
+    const history = previousMessages
+      .filter(
+        (message) =>
+          ["user", "assistant"].includes(message.role) &&
+          typeof message.content === "string" &&
+          message.status !== "failed"
+      )
+      .map(({ role, content }) => ({ role, content }));
+
+    history.push({ role: "user", content });
+
+    return history;
+  }
 
 
   useEffect(() => {
@@ -67,7 +98,13 @@ function Chat() {
     }));
 
     try {
-      const data = await sendChatMessage(content);
+      const history = buildHistory(
+        conversationId,
+        messageId,
+        content
+      );
+
+      const data = await sendChatMessage(content, history);
 
       updateConversation(conversationId, (conversation) => ({
         ...conversation,
@@ -195,7 +232,37 @@ function Chat() {
               <p className="mb-1 text-xs font-semibold opacity-70">
                 {message.role === "user" ? "You" : "BrainWave"}
               </p>
-              <p className="whitespace-pre-wrap">{message.content}</p>
+
+              {message.role === "user" ? (
+                <p className="whitespace-pre-wrap break-words">
+                  {message.content}
+                </p>
+              ) : (
+                <div className="min-w-0 max-w-full break-words text-sm leading-7 [&_a]:text-color-1 [&_a]:underline [&_blockquote]:my-4 [&_blockquote]:border-l-2 [&_blockquote]:border-color-1 [&_blockquote]:pl-4 [&_blockquote]:text-n-3 [&_code]:rounded [&_code]:bg-n-8 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-xs [&_h1]:mb-3 [&_h1]:mt-5 [&_h1]:text-2xl [&_h1]:font-bold [&_h2]:mb-2 [&_h2]:mt-5 [&_h2]:text-xl [&_h2]:font-semibold [&_h3]:mb-2 [&_h3]:mt-4 [&_h3]:text-lg [&_h3]:font-semibold [&_hr]:my-4 [&_hr]:border-n-5 [&_li]:my-1 [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:my-2 [&_pre]:my-4 [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-n-5 [&_pre]:bg-n-8 [&_pre]:p-4 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-sm [&_strong]:font-semibold [&_table]:w-full [&_table]:border-collapse [&_th]:border [&_th]:border-n-5 [&_th]:bg-n-8 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold [&_td]:border [&_td]:border-n-5 [&_td]:px-3 [&_td]:py-2 [&_ul]:my-3 [&_ul]:list-disc [&_ul]:pl-6">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      table: ({ children }) => (
+                        <div className="my-4 max-w-full overflow-x-auto rounded-lg">
+                          <table>{children}</table>
+                        </div>
+                      ),
+                      a: ({ children, href }) => (
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {children}
+                        </a>
+                      ),
+                    }}
+                  >
+                    {message.content}
+                  </ReactMarkdown>
+                </div>
+              )}
+
             </div>
 
             {message.status === "failed" && (
